@@ -1,0 +1,4 @@
+com\ski\SkiResortServiceTests.class
+com\ski\SkiResortControllerTests.class
+com\ski\SkiResortRepositoryTests.class
+com\ski\SkiResortValidatorTests.class

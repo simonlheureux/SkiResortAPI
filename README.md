@@ -12,3 +12,27 @@ Pour importer le projet dans STS/Eclipse:
 Le dossier Deploy contient un Jar déjà compilé pour lancer l'API. Commande pour lancer le Jar : java -jar SkiResortAPI-1.0.0.jar
 
 URL pour L'API: http://localhost:8080/skiResorts/
+
+Appels possibles:
+
+GET http://localhost:8080/skiResorts/
+
+GET http://localhost:8080/skiResorts/{id}
+
+POST http://localhost:8080/skiResorts/
+Body: Objet SkiResort. 
+Exemple: 
+{
+    "name":"Nom",
+    "description":"Description"
+}
+
+PUT http://localhost:8080/skiResorts/{id}
+Body: Objet SkiResort. 
+Exemple: 
+{
+    "name":"Nom",
+    "description":"Description"
+}
+
+DELETE http://localhost:8080/skiResorts/{id}

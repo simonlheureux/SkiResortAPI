@@ -1,8 +1,0 @@
-com\ski\SkiResortController.class
-com\ski\SkiResortRepository.class
-com\ski\ValidationException.class
-com\ski\SkiResortService.class
-com\ski\SkiResort.class
-com\ski\SkiResortApiApplication.class
-com\ski\SkiResortValidator.class
-com\ski\ItemNotFoundException.class

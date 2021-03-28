@@ -4,7 +4,7 @@ public class SkiResortValidator {
 
 	public static void validateSkiResort(SkiResort skiResort) throws ValidationException {
 
-		if (skiResort.getName() == null || skiResort.getName().isBlank()) {
+		if (skiResort.getName() == null || skiResort.getName().trim().isEmpty()) {
 			throw new ValidationException("Ski resort name must not be empty.");
 		}
 

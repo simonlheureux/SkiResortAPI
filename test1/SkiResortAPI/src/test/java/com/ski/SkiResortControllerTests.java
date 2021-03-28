@@ -63,11 +63,11 @@ class SkiResortControllerTests {
 	@Test
 	public void whenGetInvalidSkiResort_thenReturnError() throws Exception {
 
-		when(skiResortService.getSkiResort(999))
-				.thenThrow(new ItemNotFoundException("Ski resort not found for id: 999"));
+		String errorMessage = "Ski resort not found for id: 999";
+		when(skiResortService.getSkiResort(999)).thenThrow(new ItemNotFoundException(errorMessage));
 
 		mockMvc.perform(get("/skiResorts/999")).andDo(print()).andExpect(status().isNotFound())
-				.andExpect(status().reason("Ski resort not found for id: 999"));
+				.andExpect(status().reason(errorMessage));
 
 		verify(skiResortService, times(1)).getSkiResort(999);
 	}
@@ -91,14 +91,14 @@ class SkiResortControllerTests {
 	@Test
 	public void whenAddInvalidNameSkiResort_thenReturnError() throws Exception {
 
-		when(skiResortService.addSkiResort(ArgumentMatchers.any()))
-				.thenThrow(new ValidationException("Ski resort name must not be empty."));
+		String errorMessage = "Ski resort name must not be empty.";
+		when(skiResortService.addSkiResort(ArgumentMatchers.any())).thenThrow(new ValidationException(errorMessage));
 
 		SkiResort newSkiResort = new SkiResort(-1, "", null);
 		String content = new ObjectMapper().writeValueAsString(newSkiResort);
 
 		mockMvc.perform(post("/skiResorts/").contentType(MediaType.APPLICATION_JSON).content(content)).andDo(print())
-				.andExpect(status().isBadRequest()).andExpect(status().reason("Ski resort name must not be empty."));
+				.andExpect(status().isBadRequest()).andExpect(status().reason(errorMessage));
 
 		ArgumentCaptor<SkiResort> anySkiResort = ArgumentCaptor.forClass(SkiResort.class);
 		verify(skiResortService, times(1)).addSkiResort(anySkiResort.capture());
@@ -125,14 +125,15 @@ class SkiResortControllerTests {
 	@Test
 	public void whenUpdateInvalidNameSkiResort_thenReturnError() throws Exception {
 
+		String errorMessage = "Ski resort name must not be empty.";
 		SkiResort skiResort = new SkiResort(1, "", "DescUpdated");
 		when(skiResortService.updateSkiResort(ArgumentMatchers.anyLong(), ArgumentMatchers.any()))
-				.thenThrow(new ValidationException("Ski resort name must not be empty."));
+				.thenThrow(new ValidationException(errorMessage));
 
 		String content = new ObjectMapper().writeValueAsString(skiResort);
 
 		mockMvc.perform(put("/skiResorts/1").contentType(MediaType.APPLICATION_JSON).content(content)).andDo(print())
-				.andExpect(status().isBadRequest()).andExpect(status().reason("Ski resort name must not be empty."));
+				.andExpect(status().isBadRequest()).andExpect(status().reason(errorMessage));
 
 		ArgumentCaptor<SkiResort> anySkiResort = ArgumentCaptor.forClass(SkiResort.class);
 		ArgumentCaptor<Long> anyLong = ArgumentCaptor.forClass(Long.class);
@@ -142,14 +143,15 @@ class SkiResortControllerTests {
 	@Test
 	public void whenUpdateInvalidSkiResort_thenReturnError() throws Exception {
 
+		String errorMessage = "Ski resort not found for id: 999";
 		SkiResort skiResort = new SkiResort(999, "NameUpdated", "DescUpdated");
 		when(skiResortService.updateSkiResort(ArgumentMatchers.anyLong(), ArgumentMatchers.any()))
-				.thenThrow(new ItemNotFoundException("Ski resort not found for id: 999"));
+				.thenThrow(new ItemNotFoundException(errorMessage));
 
 		String content = new ObjectMapper().writeValueAsString(skiResort);
 
 		mockMvc.perform(put("/skiResorts/999").contentType(MediaType.APPLICATION_JSON).content(content)).andDo(print())
-				.andExpect(status().isNotFound()).andExpect(status().reason("Ski resort not found for id: 999"));
+				.andExpect(status().isNotFound()).andExpect(status().reason(errorMessage));
 
 		ArgumentCaptor<SkiResort> anySkiResort = ArgumentCaptor.forClass(SkiResort.class);
 		ArgumentCaptor<Long> anyLong = ArgumentCaptor.forClass(Long.class);
@@ -167,11 +169,11 @@ class SkiResortControllerTests {
 	@Test
 	public void whenDeleteInvalidSkiResort_thenReturnError() throws Exception {
 
-		doThrow(new ItemNotFoundException("Ski resort not found for id: 999")).when(skiResortService)
-				.deleteSkiResort(999);
+		String errorMessage = "Ski resort not found for id: 999";
+		doThrow(new ItemNotFoundException(errorMessage)).when(skiResortService).deleteSkiResort(999);
 
 		mockMvc.perform(delete("/skiResorts/999")).andDo(print()).andExpect(status().isNotFound())
-				.andExpect(status().reason("Ski resort not found for id: 999"));
+				.andExpect(status().reason(errorMessage));
 
 		verify(skiResortService, times(1)).deleteSkiResort(999);
 	}
